@@ -137,3 +137,8 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
+### Alias ###
+#
+# Dotfile git bare alias (bare repo in ~/dotFiles)
+alias dotFConfig='/usr/bin/git --git-dir=$HOME/dotFiles/ --work-tree=$HOME'
