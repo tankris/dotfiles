@@ -141,4 +141,4 @@ ex ()
 ### Alias ###
 #
 # Dotfile git bare alias (bare repo in ~/dotFiles)
-alias dotFConfig='/usr/bin/git --git-dir=$HOME/dotFiles/ --work-tree=$HOME'
+alias dotfile='GIT_DIR=$HOME/dotFiles/ GIT_WORK_TREE=$HOME'
