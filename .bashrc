@@ -142,3 +142,6 @@ ex ()
 #
 # Dotfile git bare alias (bare repo in ~/dotFiles)
 alias dotfile='GIT_DIR=$HOME/dotFiles/ GIT_WORK_TREE=$HOME'
+
+### Default browser ###
+#export BROWSER=/usr/bin/firefox

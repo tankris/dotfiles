@@ -419,6 +419,20 @@ mode "$mode_gaps_outer" {
         bindsym Escape mode "default"
 }
 
+## Manual management of external displays
+# Set the shortcuts and what they do
+set $mode_display Ext Screen (h) HDMI ON, (y) HDMI OFF
+mode "$mode_display" {
+	bindsym h exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal --output eDP-1-1 --primary --mode 1920x1080 --pos 0x1080 --rotate normal, mode "default"
+    	bindsym y exec --no-startup-id xrandr --output HDMI-0 --off --output eDP-1-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal, mode "default"
+
+   	# back to normal: Enter or Escape
+    	bindsym Return mode "default"
+    	bindsym Escape mode "default"
+}
+# Declare here the shortcut to bring the display selection menu
+bindsym $mod+x mode "$mode_display"
+
 ## Move workspace to output
 bindsym $mod+Ctrl+Shift+x move workspace to output HDMI-0
 bindsym $mod+Ctrl+Shift+c move workspace to output primary
