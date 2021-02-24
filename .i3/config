@@ -42,11 +42,11 @@ bindsym $mod+z exec --no-startup-id morc_menu
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
 
-exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-#exec --no-startup-id pulseaudio
-#exec --no-startup-id pa-applet
-#bindsym $mod+Ctrl+m exec pavucontrol
+###exec --no-startup-id volumeicon
+###bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+exec --no-startup-id start-pulseaudio-x11
+exec --no-startup-id pa-applet
+bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
 
@@ -59,9 +59,10 @@ bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+F4 exec steam
+bindsym $mod+F5 exec firefox-developer-edition
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
-bindsym $mod+F5 exec terminal -e 'mocp'
+# bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill picom
 bindsym $mod+Ctrl+t exec --no-startup-id picom -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
@@ -132,7 +133,7 @@ bindsym $mod+Shift+minus move scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
+# bindsym $mod+minus scratchpad show
 
 #navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
@@ -436,3 +437,53 @@ bindsym $mod+x mode "$mode_display"
 ## Move workspace to output
 bindsym $mod+Ctrl+Shift+x move workspace to output HDMI-0
 bindsym $mod+Ctrl+Shift+c move workspace to output primary
+
+## Battery Notification Daemon
+exec /home/realk/Documents/Projects/Battery_Notif/battery_notif.sh
+
+## Assigning applications to specific workspaces
+assign [class="code-oss"] 1
+assign [class="firefoxdeveloperedition" instance="Devtools"] 1
+for_window [title="^(DevTools).*"] move container to workspace 1
+assign [class="firefoxdeveloperedition"] 2
+assign [class="Google-chrome"] 2
+assign [class="firefox"] 3
+assign [class="Deluge"] 3
+assign [class="Discord"] 3
+assign [class="Element"] 3
+assign [class="Lutris"] 5
+assign [class="Steam"] 5
+assign [class="dota2"] 6
+
+## Assigning workspaces to specific monitor output
+workspace 1 output eDP-1-1
+workspace 2 output HDMI-0
+workspace 3 output eDP-1-1
+workspace 4 output HDMI-0
+workspace 5 output eDP-1-1
+workspace 6 output eDP-1-1
+
+## Adding redshift-gtk
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
+
+# Declare here the shortcut to bring the audio output selection menu
+bindsym $mod+o mode "$mode_bluetooth_vol"
+## Manual management of audio output device
+# Set the shortcuts and what they do
+set $mode_bluetooth_vol Ext Screen (b) Bluetooth (s) Stereo
+mode "$mode_bluetooth_vol" {
+	bindsym b exec --no-startup-id ~/.i3/pactl_volume.sh, mode "default"
+    	bindsym s exec --no-startup-id pactl set-default-sink 0, mode "default"
+
+   	# back to normal: Enter or Escape
+    	bindsym Return mode "default"
+    	bindsym Escape mode "default"
+}
+
+# Controlling the Bluetooth Volume
+bindsym $mod+KP_Add exec pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym $mod+KP_Subtract exec pactl set-sink-volume @DEFAULT_SINK@  -5% #decrease sound volume
+
+#For virtual box
+for_window [class="VirtualBox Machine"] floating enable
+for_window [class="VirtualBox Manager"] floating enable
